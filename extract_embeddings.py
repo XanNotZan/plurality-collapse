@@ -8,6 +8,7 @@ import time
 import numpy as np
 import torch
 from datasets import load_dataset
+from dotenv import load_dotenv
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 # ── Constants ──────────────────────────────────────────────────────────────────
@@ -133,6 +134,7 @@ def embed_source(
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 def main() -> None:
+    load_dotenv()
     logger = setup_logging()
     start_time = time.time()
 
