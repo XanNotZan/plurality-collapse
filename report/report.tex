@@ -225,6 +225,17 @@ Jaccard similarity   & 0.157 \\
 \end{tabular}
 \end{table}
 
+\subsection{Value Diversity Is a Smooth Gradient, Not a Cherry-Picked Effect}
+
+The comparison of extreme exemplars (Section~4.3.1) could be accused of cherry-picking. To rule this out, we generated Kaleido value expressions for all 10,826 human rationales and sorted them by reconstruction error. Figure~\ref{fig:gradient} shows the result: value diversity increases smoothly and monotonically with reconstruction error. Non-overlapping bins of 200 rationales range from 25--31 unique values at the lowest errors to 49--60 unique values at the highest (Pearson $r = 0.393$, $p = 0.003$). The sliding window analysis ($w = 200$, step $= 50$) yields $r = 0.935$ ($p < 0.0001$), confirming the relationship is continuous across the full error range. The ``missing dimensions'' of LLM moral reasoning encode systematically rarer and more diverse values, not a handful of outliers.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{value_diversity_sliding.png}
+\caption{Value diversity gradient across all 10,826 human rationales (sliding window, $w = 200$, step $= 50$). Green: unique values per bin (left axis). Orange: Shannon entropy (right axis). Both increase monotonically with reconstruction error.}
+\label{fig:gradient}
+\end{figure}
+
 \subsection{The Gap Widens With Consensus}
 
 After controlling for sample size via subsampling (Table~\ref{tab:consensus}), the human dimensionality advantage exists at every consensus level but grows with higher moral consensus:
@@ -273,6 +284,8 @@ Per-dilemma LLM cosine distance correlates negligibly with community agreement (
 LLMs occupy a measurable subspace of human moral reasoning. The evidence is convergent: lower dimensionality, asymmetric cross-projection, and narrower value expression vocabularies all point in the same direction. However, the effect is not total---LLMs still capture 81.6\% of human variance, and the subspace they occupy overlaps substantially with the most common human moral framings (Respect, Family harmony, Autonomy).
 
 The collapse is concentrated in the ``long tail'' of moral reasoning: rare values, culturally specific perspectives, and situational concreteness that humans bring to moral discourse but that LLMs smooth over in favor of generic assessments. This is precisely the kind of diversity that matters most for representing minority viewpoints in moral deliberation.
+
+Notably, this finding converges with Russo et al.'s count-based result that 81.6\% of LLM moral value expressions concentrate in the top 10 value categories, compared to only 35.2\% for humans. Our embedding-geometry approach and their frequency-distribution approach are methodologically independent---different data representations, different metrics, different analysis pipelines---yet arrive at the same conclusion: LLMs systematically compress the diversity of moral reasoning. This methodological triangulation significantly strengthens both findings.
 
 \subsection{The Stylistic Confound}
 

@@ -15,4 +15,4 @@ dependencies = [
 ]
 
 [tool.setuptools]
-py-modules = ["fetch_comments", "filter_comments", "extract_embeddings", "analyze_embeddings", "robustness_checks", "cross_space_projection", "inspect_unexplained_variance", "inspect_llm_unexplained", "inspect_human_unexplained_tfidf", "consensus_stratification"]
+py-modules = ["fetch_comments", "filter_comments", "extract_embeddings", "analyze_embeddings", "robustness_checks", "cross_space_projection", "inspect_unexplained_variance", "inspect_llm_unexplained", "inspect_human_unexplained_tfidf", "consensus_stratification", "value_diversity_gradient"]
