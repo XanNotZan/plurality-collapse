@@ -20,7 +20,7 @@
 \graphicspath{{../data/analysis/}}
 
 \title{Plurality Collapse: Measuring the Dimensionality Gap\\Between Human and LLM Moral Reasoning\\[0.3em]\large Milestone 2 Report}
-\author{Xan Carey}
+\author{Xan Carey (yac2014), Kevin Huang (qh2257@nyu.edu), Quinn Pu (quinn.t.s@nyu.edu)}
 \date{April 2026}
 
 \begin{document}
@@ -33,19 +33,17 @@
 
 \subsection{Dataset and Embedding}
 
-We draw on the Sachdeva et al.\ dataset of 10,826 moral dilemmas from Reddit's ``Am I the Asshole'' forum. Each dilemma includes a top human comment alongside rationales from seven LLMs (GPT-3.5, GPT-4, Claude, Bison, Gemma, Mistral, Llama), each providing 2--3 rationales per dilemma for 216,497 LLM rationales total.
+We use the Sachdeva et al.\ dataset of 10,826 moral dilemmas from Reddit's ``Am I the Asshole'' forum. Each dilemma includes a top human comment alongside rationales from seven LLMs (GPT-3.5, GPT-4, Claude, Bison, Gemma, Mistral, Llama), each providing 2--3 rationales per dilemma for 216,497 LLM rationales total.
 
-All rationales are encoded with Kaleido-XL, an encoder-decoder model trained on ValuePrism (31K moral situations with value annotations). Mean-pooling the encoder's final hidden states yields a 2048-dimensional embedding per rationale. Because Kaleido's space is organized around moral knowledge, geometric dimensionality serves as a proxy for reasoning diversity. We replicate all core analyses with Sentence-BERT (\texttt{all-mpnet-base-v2}, 768-dim) to control for encoder-specific bias.
+All rationales are encoded with Kaleido-XL, an encoder-decoder model trained on ValuePrism (31K moral situations with value annotations). Mean-pooling the encoder's final hidden states produces a 2048-dimensional embedding per rationale. Because Kaleido's representation space is structured around moral knowledge, dimensionality in this space is a meaningful proxy for moral reasoning diversity. To control for encoder-specific bias, we replicate all core analyses with Sentence-BERT (\texttt{all-mpnet-base-v2}, 768-dim), which has no moral-specific training.
 
 \subsection{Analysis Pipeline}
 
-Our analysis has four stages. First, we measure dimensionality via PCA, computing the participation ratio $\text{PR} = (\sum \lambda_i)^2 / \sum \lambda_i^2$ (effective variance-carrying dimensions) and comp90 (components for 90\% cumulative variance, sensitive to the eigenvalue tail). Robustness checks include matched-$n$ subsampling (5 seeds), dilemma-matched subsampling, word-count-quintile binning, and kernel PCA (RBF).
+We measure dimensionality with PCA, computing two metrics per source: the participation ratio $\text{PR} = (\sum \lambda_i)^2 / \sum \lambda_i^2$, which gives the effective number of variance-carrying dimensions, and comp90, the number of components needed for 90\% cumulative variance. Comp90 is more sensitive to the eigenvalue tail. We include matched-$n$ subsampling (5 seeds), dilemma-matched subsampling, word-count-quintile binning, and kernel PCA (RBF) as robustness checks.
 
-Second, we test for asymmetry by projecting each source's data onto the other's principal components and comparing variance captured in each direction.
+We then test for asymmetry by projecting each source's data onto the other's principal components and comparing the variance captured in each direction. The residuals from this cross-projection (the parts of each source's representation that the other's PCs cannot capture) are qualified using Kaleido's decoder, which generates a moral value label per rationale. We collapse the 324 unique labels into semantic clusters (Sentence-BERT + $k$-means) and measure how value diversity changes in sliding windows ($w{=}200$, step${=}50$) along the reconstruction error axis.
 
-Third, we qualify what the cross-projection residuals contain. Kaleido's decoder generates a moral value label per rationale; we collapse the 324 unique labels into semantic clusters (Sentence-BERT + $k$-means) and correlate residual magnitude with value diversity in sliding windows ($w{=}200$, step${=}50$) along the reconstruction error axis.
-
-Fourth, we measure local LLM density around each human rationale via $k$-nearest neighbors ($k{=}50$) in PCA-reduced space, correlating density with reconstruction errors.
+Last, we measure local LLM density around each human rationale using $k$-nearest neighbors ($k{=}50$) in PCA-reduced space, to determine whether the gap reflects regions LLMs avoid entirely or regions they populate less densely.
 
 %% ============================================================================
 \section{Results}
@@ -53,7 +51,7 @@ Fourth, we measure local LLM density around each human rationale via $k$-nearest
 
 \subsection{Dimensionality Gap}
 
-Human rationales require 448 PCA components for 90\% variance, compared to 329--341 for individual LLMs and 347 for the pooled all-LLM set (Table~\ref{tab:summary}). The cumulative variance curves in Figure~\ref{fig:cumvar} make this visible: human variance accumulates more slowly, with a longer tail past the point where LLM curves flatten.
+Human rationales need 448 PCA components to reach 90\% variance. Individual LLMs need 329--341, and the pooled all-LLM set needs 347 (Table~\ref{tab:summary}). The cumulative variance curves (Figure~\ref{fig:cumvar}) show that human variance accumulates more slowly, with a longer tail past the point where LLM curves flatten.
 
 \begin{table}[H]
 \centering\small
@@ -86,11 +84,11 @@ All LLM & 216,497 & 51.95 & 347 & 679 \\
 \label{fig:cumvar}
 \end{figure}
 
-When we subsample each LLM to $n{=}10{,}826$ to match the human count, the gap is 35--41\%: LLMs need only 317--332 components. Dilemma-matched subsampling (picking exactly 1 of each LLM's 2--3 rationales per dilemma) shifts comp90 by only 2--5 components. The gap also persists across all word-count quintiles (30--47\% per bin), and kernel PCA yields near-identical PR rankings ($r = 0.984$), ruling out nonlinear structure.
+When we subsample each LLM to $n{=}10{,}826$ to match the human count, the gap is 35--41\%: LLMs need only 317--332 components. Dilemma-matched subsampling (selecting exactly 1 of each LLM's 2--3 rationales per dilemma) shifts comp90 by only 2--5 components. The gap persists across all word-count quintiles (30--47\% per bin), and kernel PCA yields near-identical PR rankings ($r = 0.984$), ruling out nonlinear structure.
 
 \subsection{Asymmetric Overlap}
 
-Cross-projection reveals a directional gap. Human PCs ($k{=}448$) capture 87.3\% of all-LLM variance, while all-LLM PCs ($k{=}347$) capture only 81.6\% of human variance---a 5.7pp asymmetry (Figure~\ref{fig:heatmap}). LLM reasoning largely lives within the human subspace, but not vice versa. Per-model: LLM PCs capture 77.5--81.3\% of human variance; human PCs capture 85.8--87.7\% of each LLM. SBERT shows an even wider asymmetry of 9.4pp.
+The gap is directional. Projecting all-LLM data onto the human PCA basis ($k{=}448$) captures 87.3\% of LLM variance. In the other direction, projecting human data onto all-LLM PCs ($k{=}347$), only 81.6\% is captured, a 5.7pp asymmetry (Figure~\ref{fig:heatmap}). LLM reasoning sits largely within the human subspace, but human reasoning extends into directions that LLM PCs do not span. Per-model, LLM PCs capture 77.5--81.3\% of human variance while human PCs capture 85.8--87.7\% of each LLM. In the SBERT replication the asymmetry widens to 9.4pp.
 
 \begin{figure}[H]
 \centering
@@ -102,7 +100,7 @@ Cross-projection reveals a directional gap. Human PCs ($k{=}448$) capture 87.3\%
 
 \subsection{Moral Content in the Extra Dimensions}
 
-Do the extra human dimensions reflect moral content or just stylistic noise? We use Kaleido's decoder to generate a value label for each rationale, sort by reconstruction error under LLM PCs, and bin with a sliding window. The correlation between error and unique value clusters is $r = 0.897$ ($p < 0.0001$, Figure~\ref{fig:gradient}): rationales that LLM PCs fail to capture invoke more diverse moral values. The reverse direction yields $r = 0.823$. TF-IDF does turn up some stylistic markers among high-residual rationales, but the gradient is measured through decoded value labels, independent of surface text.
+The extra human dimensions could reflect writing style (Reddit slang, profanity, informal register) rather than moral content. To test this, we use Kaleido's decoder to generate a moral value label for each rationale, sort all 10,826 human rationales by their reconstruction error under LLM PCs, and measure value diversity in sliding windows. The correlation between reconstruction error and unique value clusters per bin is $r = 0.897$ ($p < 0.0001$, Figure~\ref{fig:gradient}): the harder a rationale is for LLM PCs to capture, the more diverse the moral values it invokes. The reverse direction (LLM rationales under human PCs) yields $r = 0.823$. TF-IDF analysis on the surface text does identify stylistic markers among the high-residual rationales, but the gradient is measured through decoded value labels and is independent of register.
 
 \begin{figure}[H]
 \centering
@@ -114,32 +112,30 @@ Do the extra human dimensions reflect moral content or just stylistic noise? We 
 
 \subsection{Frequency Compression}
 
-Does the gap represent regions LLMs never visit, or regions they visit less often? KNN analysis shows the latter. Mean distance to 50 nearest LLM neighbors correlates with reconstruction error at $r = 0.969$ (binned) and $r = 0.846$ (per-rationale); the density ratio reaches $r = 0.988$ binned. LLMs span most of the space but concentrate mass in a smaller region, visiting the moral periphery less frequently than humans.
+KNN analysis shows that LLMs are not absent from the high-residual regions of embedding space, but sparser there. The mean distance from each human rationale to its 50 nearest LLM neighbors correlates with reconstruction error at $r = 0.969$ (binned) and $r = 0.846$ (per-rationale); the density ratio (LLM distance / human distance) reaches $r = 0.988$ at the bin level. LLMs cover most of the space but concentrate their mass in a smaller region, populating the periphery far less than humans do.
 
 %% ============================================================================
 \section{Analysis}
 %% ============================================================================
 
-Across the four stages, the picture is consistent: human moral reasoning occupies a higher-dimensional subspace, the gap is asymmetric, the extra dimensions carry moral content, and the mechanism is frequency compression rather than categorical absence.
+The results are consistent across the four stages: human moral reasoning occupies a higher-dimensional subspace, the gap is asymmetric, the extra dimensions carry moral content, and the mechanism is frequency compression rather than categorical absence.
 
-We tested and ruled out four confounds. The gap survives matched-$n$ subsampling with less than 1 component of seed variation against a 114--131 component gap. It persists within every word-count quintile. Kernel PCA produces near-identical rankings ($r = 0.984$), ruling out nonlinear structure. And Sentence-BERT---which has never seen GPT-4 moral training data---replicates the gap with proportionally similar magnitude, with the cross-projection asymmetry actually larger in SBERT (9.4\% vs.\ 5.7\%).
+We tested four confounds. The gap survives matched-$n$ subsampling with less than 1 component of seed variation against a 114--131 component gap. It persists within every word-count quintile. Kernel PCA produces near-identical rankings ($r = 0.984$), ruling out nonlinear structure. And Sentence-BERT, which has no exposure to GPT-4 moral training data, replicates the gap at proportionally similar magnitude; the cross-projection asymmetry is larger in SBERT (9.4\% vs.\ 5.7\%), not smaller.
 
-The value diversity gradient ($r = 0.897$) links the extra dimensions to moral content: rationales that LLM PCs fail to reconstruct invoke the most diverse moral values. Combined with the KNN density results, this suggests LLMs are not missing moral categories entirely but under-representing the periphery of the value distribution.
+The value diversity gradient ($r = 0.897$) connects the extra dimensions to moral content: rationales that LLM PCs fail to reconstruct are the ones that invoke the most diverse moral values. The KNN density results show this is a continuous gradient ($r = 0.969$ binned) rather than a hard boundary: LLMs under-populate the periphery of the value distribution, but they do not avoid it entirely.
 
-The analysis does rely on a single dataset (Reddit AITA), and Kaleido's decoder was trained on GPT-4-generated labels, creating a potential circularity when qualifying one LLM source's residuals. SBERT addresses encoder bias but not this decoder dependency. The seven LLMs also represent a particular generation of models.
+There are limitations. The analysis relies on a single dataset (Reddit AITA dilemmas), and Kaleido's decoder was trained on GPT-4-generated value labels, which introduces circularity when qualifying residuals involving GPT-4 as a source. The SBERT replication controls for encoder bias but not this decoder dependency. The seven LLMs in the dataset represent a particular generation of models, and newer systems may behave differently.
 
 %% ============================================================================
 \section{Plan for Additional Analysis}
 %% ============================================================================
 
-Several extensions would strengthen or clarify these findings.
+We plan to stratify dilemmas by community consensus level (low $<0.5$, medium $0.5$--$0.8$, high $>0.8$ agreement) and test whether the dimensionality gap depends on moral controversy. If LLMs compress diversity as much on clear-cut dilemmas as on contested ones, the compression is structural rather than context-dependent. Bootstrap resampling at matched $n$ will control for unequal bucket sizes.
 
-We plan to stratify dilemmas by community consensus (low $<0.5$, medium $0.5$--$0.8$, high $>0.8$ agreement) and test whether the gap varies with moral controversy. If LLMs flatten diversity uniformly regardless of how contested a dilemma is, that points to a structural rather than context-dependent bias. Bootstrap resampling at matched $n$ will control for unequal bin sizes.
+We also plan to test whether categorical analysis is appropriate for this data. Prior work (e.g., Russo et al.) treats moral values as discrete categories and measures diversity by counting them. We will run $k$-means on the rationale embeddings and evaluate cluster quality via silhouette scores and gap statistics. If scores are near zero, the value space is better understood as a continuum, which would support our geometric approach.
 
-We also want to test whether $k$-means clustering on the rationale embeddings produces meaningful discrete structure (via silhouette scores and gap statistics), comparing joint vs.\ per-source clustering. Near-zero silhouette scores would confirm that the moral value space is better understood as a continuum, validating our geometric approach over categorical methods used in prior work.
+All seven LLMs fall in a narrow comp90 range (329--341), but their residual profiles may differ. Per-model cross-projection residuals mapped to specific value categories could show whether the compression is a shared training artifact or varies across models.
 
-On the model side, all seven LLMs show similar comp90 values (329--341), but their residual profiles may differ. Per-model cross-projection residuals mapped to specific value categories could reveal whether the compression is a shared training artifact or model-specific.
-
-Finally, if plurality collapse is a frequency bias rather than a capability limitation, targeted prompting may help recover diversity. We plan to test persona-based prompts, explicit diversity instructions, and chain-of-thought with moral framework enumeration, measuring whether any strategy shifts LLM distributions toward higher dimensionality.
+Last, if the compression is a frequency bias rather than a capability limitation, it may be partially recoverable through prompting. We plan to test persona-based prompts, explicit diversity instructions, and chain-of-thought with moral framework enumeration, measuring whether any of these shift the LLM embedding distribution toward higher dimensionality.
 
 \end{document}
