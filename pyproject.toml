@@ -12,7 +12,9 @@ dependencies = [
     "numpy>=1.24",
     "scikit-learn>=1.1",
     "matplotlib>=3.7",
+    "sentence-transformers>=2.0",
+    "umap-learn>=0.5",
 ]
 
 [tool.setuptools]
-py-modules = ["fetch_comments", "filter_comments", "extract_embeddings", "analyze_embeddings", "robustness_checks", "cross_space_projection", "inspect_unexplained_variance", "inspect_llm_unexplained", "inspect_human_unexplained_tfidf", "consensus_stratification", "value_diversity_gradient"]
+py-modules = ["fetch_comments", "filter_comments", "extract_embeddings", "analyze_embeddings", "robustness_checks", "cross_space_projection", "inspect_unexplained_variance", "inspect_llm_unexplained", "inspect_human_unexplained_tfidf", "consensus_stratification", "value_diversity_gradient", "compare_value_frequencies", "consensus_robustness", "cluster_value_labels", "alternative_encoder", "effective_clusters_sweep", "cluster_rationale_embeddings", "frequency_geometry"]

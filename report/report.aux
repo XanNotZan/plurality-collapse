@@ -2,58 +2,95 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Question}{1}{section.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Do (Methods)}{1}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Dataset}{1}{subsection.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Embedding Extraction}{2}{subsection.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Dimensionality Analysis}{2}{subsection.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Cross-Space Projection}{2}{subsection.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Unexplained Variance Inspection}{2}{subsection.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Consensus Stratification}{2}{subsection.2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Robustness Controls}{2}{subsection.2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Author's Rationale}{3}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Findings}{3}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Human Moral Reasoning Is Higher-Dimensional}{3}{subsection.4.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces PCA dimensionality metrics per source (full sample sizes).}}{3}{table.caption.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Data and Embedding}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Dataset}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Embedding}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Layer 1: A Dimensionality Gap Exists}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Method.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}The Gap}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces PCA dimensionality metrics per source (full sample sizes, Kaleido-XL).}}{3}{table.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:summary}{{1}{3}{PCA dimensionality metrics per source (full sample sizes)}{table.caption.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Robustness: Sample Size}{4}{subsubsection.4.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Participation ratio at matched sample sizes ($n = 10{,}826$, 5 seeds). Error bars show standard deviation across seeds.}}{4}{figure.caption.2}\protected@file@percent }
-\newlabel{fig:subsample}{{1}{4}{Participation ratio at matched sample sizes ($n = 10{,}826$, 5 seeds). Error bars show standard deviation across seeds}{figure.caption.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Robustness: Text Length}{4}{subsubsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}LLMs Occupy a Subspace of Human Moral Reasoning}{4}{subsection.4.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Variance captured as a function of $k$ principal components. Solid lines: self-projection. Dashed lines: cross-projection. The gap between the two dashed lines quantifies the asymmetry.}}{5}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:cross_curves}{{2}{5}{Variance captured as a function of $k$ principal components. Solid lines: self-projection. Dashed lines: cross-projection. The gap between the two dashed lines quantifies the asymmetry}{figure.caption.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Variance captured at each basis source's 90\% $k$ for all directed pairs. Rows = basis (PCs), columns = projected data. Off-diagonal values below the diagonal (LLM$\to $human) are systematically lower than above (human$\to $LLM).}}{5}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:heatmap}{{3}{5}{Variance captured at each basis source's 90\% $k$ for all directed pairs. Rows = basis (PCs), columns = projected data. Off-diagonal values below the diagonal (LLM$\to $human) are systematically lower than above (human$\to $LLM)}{figure.caption.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Decomposing the Unexplained Variance}{6}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}What LLMs Miss About Humans (18.4\%)}{6}{subsubsection.4.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Value expression distributions for poorly-captured vs.\ well-captured rationales. Left: human rationales projected onto LLM PCs. Right: LLM rationales projected onto human PCs.}}{6}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:values}{{4}{6}{Value expression distributions for poorly-captured vs.\ well-captured rationales. Left: human rationales projected onto LLM PCs. Right: LLM rationales projected onto human PCs}{figure.caption.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces TF-IDF terms distinguishing poorly-captured (green, human-specific) from well-captured (pink, LLM-like) human rationales.}}{7}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:human_tfidf}{{5}{7}{TF-IDF terms distinguishing poorly-captured (green, human-specific) from well-captured (pink, LLM-like) human rationales}{figure.caption.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Categorization of top 30 TF-IDF terms for poorly-captured rationales.}}{7}{table.caption.7}\protected@file@percent }
-\newlabel{tab:tfidf_comparison}{{2}{7}{Categorization of top 30 TF-IDF terms for poorly-captured rationales}{table.caption.7}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}What Humans Miss About LLMs (12.7\%)}{7}{subsubsection.4.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}Value Overlap}{7}{subsubsection.4.3.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Overlap between human-specific and LLM-specific unexplained value sets.}}{8}{table.caption.8}\protected@file@percent }
-\newlabel{tab:overlap}{{3}{8}{Overlap between human-specific and LLM-specific unexplained value sets}{table.caption.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Value Diversity Is a Smooth Gradient, Not a Cherry-Picked Effect}{8}{subsection.4.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Value diversity gradient across all 10,826 human rationales (sliding window, $w = 200$, step $= 50$). Green: unique values per bin (left axis). Orange: Shannon entropy (right axis). Both increase monotonically with reconstruction error.}}{8}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:gradient}{{6}{8}{Value diversity gradient across all 10,826 human rationales (sliding window, $w = 200$, step $= 50$). Green: unique values per bin (left axis). Orange: Shannon entropy (right axis). Both increase monotonically with reconstruction error}{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}The Gap Widens With Consensus}{8}{subsection.4.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Subsampled components for 90\% variance by consensus bucket. Each non-human source is subsampled to match human $n$ per bucket (5 seeds, $\pm $ std).}}{9}{table.caption.10}\protected@file@percent }
-\newlabel{tab:consensus}{{4}{9}{Subsampled components for 90\% variance by consensus bucket. Each non-human source is subsampled to match human $n$ per bucket (5 seeds, $\pm $ std)}{table.caption.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Components for 90\% variance by consensus level (subsampled). Shaded bands show $\pm 1$ std across seeds. The gap widens from $+20$ to $+119$ as consensus increases.}}{9}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:consensus_gap}{{7}{9}{Components for 90\% variance by consensus level (subsampled). Shaded bands show $\pm 1$ std across seeds. The gap widens from $+20$ to $+119$ as consensus increases}{figure.caption.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}LLMs Do Not Diversify on Controversial Dilemmas}{9}{subsection.4.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Average pairwise cosine distance among LLM embeddings per dilemma vs.\ max community agreement. A diverse moral reasoning panel should show higher distance (more disagreement) on controversial dilemmas; LLMs do not.}}{10}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:convergence}{{8}{10}{Average pairwise cosine distance among LLM embeddings per dilemma vs.\ max community agreement. A diverse moral reasoning panel should show higher distance (more disagreement) on controversial dilemmas; LLMs do not}{figure.caption.12}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Interpretation}{10}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}The Core Finding: Plurality Collapse Is Real but Nuanced}{10}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}The Stylistic Confound}{10}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}High-Consensus Dilemmas: Where Collapse Matters Most}{11}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}LLM Convergence as a Signature of Collapse}{11}{subsection.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Limitations}{11}{subsection.5.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Implications}{11}{subsection.5.6}\protected@file@percent }
-\gdef \@abspage@last{11}
+\newlabel{tab:summary}{{1}{3}{PCA dimensionality metrics per source (full sample sizes, Kaleido-XL)}{table.caption.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Cumulative explained variance by number of PCA components. Annotated dots mark the 90\% and 95\% thresholds for human and all-LLM. Human reaches 90\% at $k = 448$ and 95\% at $k = 785$; all-LLM at $k = 347$ and $k = 679$. The gap widens steadily through the tail.}}{3}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:cumvar}{{1}{3}{Cumulative explained variance by number of PCA components. Annotated dots mark the 90\% and 95\% thresholds for human and all-LLM. Human reaches 90\% at $k = 448$ and 95\% at $k = 785$; all-LLM at $k = 347$ and $k = 679$. The gap widens steadily through the tail}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Robustness}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sample size.}{4}{section*.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Participation ratio at matched sample sizes ($n = 10{,}826$, 5 seeds). Error bars show $\pm 1$ std across seeds.}}{4}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:subsample}{{2}{4}{Participation ratio at matched sample sizes ($n = 10{,}826$, 5 seeds). Error bars show $\pm 1$ std across seeds}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Text length.}{4}{section*.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces PCA metrics by word-count quintile at matched $n$ within each bin.}}{5}{table.caption.7}\protected@file@percent }
+\newlabel{tab:length_quintile}{{2}{5}{PCA metrics by word-count quintile at matched $n$ within each bin}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Nonlinearity.}{5}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Distillation bias.}{5}{section*.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Kaleido vs.\ SBERT dimensionality comparison (matched $n = 10{,}826$).}}{5}{table.caption.10}\protected@file@percent }
+\newlabel{tab:kaleido_sbert}{{3}{5}{Kaleido vs.\ SBERT dimensionality comparison (matched $n = 10{,}826$)}{table.caption.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Layer 2: The Gap Is Asymmetric}{6}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Cross-Space Projection}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Variance captured when projecting one source's data onto the other source's principal components. Human principal components capture more LLM variance (green) than LLM principal components capture human variance (pink). The gap between curves is the asymmetry ($+5.7$\%).}}{6}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:cross_curves}{{3}{6}{Variance captured when projecting one source's data onto the other source's principal components. Human principal components capture more LLM variance (green) than LLM principal components capture human variance (pink). The gap between curves is the asymmetry ($+5.7$\%)}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Cross-projection heatmap (Kaleido). Rows = basis principal components, columns = projected data. Human$\to $LLM values (top row) systematically exceed LLM$\to $human values (left column).}}{7}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:heatmap}{{4}{7}{Cross-projection heatmap (Kaleido). Rows = basis principal components, columns = projected data. Human$\to $LLM values (top row) systematically exceed LLM$\to $human values (left column)}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Robustness}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Distillation bias.}{7}{section*.13}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces SBERT cross-projection heatmap. The asymmetry pattern replicates with even larger magnitude.}}{8}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:sbert_heatmap}{{5}{8}{SBERT cross-projection heatmap. The asymmetry pattern replicates with even larger magnitude}{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Layer 3: What the Extra Dimensions Contain}{8}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Value Diversity Gradient}{8}{subsection.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Value diversity gradient (Kaleido, clustered labels, sliding window $w = 200$, step $= 50$). Each point is a bin of 200 rationales, ordered left-to-right by increasing reconstruction error. The green line (left axis) shows unique moral value clusters per bin; the orange line (right axis) shows Shannon entropy. Both increase monotonically ($r = 0.897$, $p < 0.0001$).}}{9}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:gradient_kaleido}{{6}{9}{Value diversity gradient (Kaleido, clustered labels, sliding window $w = 200$, step $= 50$). Each point is a bin of 200 rationales, ordered left-to-right by increasing reconstruction error. The green line (left axis) shows unique moral value clusters per bin; the orange line (right axis) shows Shannon entropy. Both increase monotonically ($r = 0.897$, $p < 0.0001$)}{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Value diversity gradient for LLM rationales under human principal components (clustered labels, sliding window). Rationales with larger residuals invoke more diverse moral values ($r = 0.823$).}}{10}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:gradient_llm}{{7}{10}{Value diversity gradient for LLM rationales under human principal components (clustered labels, sliding window). Rationales with larger residuals invoke more diverse moral values ($r = 0.823$)}{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Robustness}{10}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Distillation bias.}{10}{section*.17}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Value diversity gradient Pearson $r$ across encoders and projection directions (clustered labels).}}{10}{table.caption.18}\protected@file@percent }
+\newlabel{tab:gradient_matrix}{{4}{10}{Value diversity gradient Pearson $r$ across encoders and projection directions (clustered labels)}{table.caption.18}{}}
+\@writefile{toc}{\contentsline {paragraph}{Stylistic confound.}{10}{section*.19}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces TF-IDF terms distinguishing poorly-captured (green) from well-captured (pink) human rationales.}}{11}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:human_tfidf}{{8}{11}{TF-IDF terms distinguishing poorly-captured (green) from well-captured (pink) human rationales}{figure.caption.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces TF-IDF terms distinguishing poorly-captured (red) from well-captured (blue) LLM rationales.}}{12}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:llm_tfidf}{{9}{12}{TF-IDF terms distinguishing poorly-captured (red) from well-captured (blue) LLM rationales}{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Layer 4: The Gap Reflects Frequency Compression}{12}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Method.}{12}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}LLM Density Drops Where Human Residuals Are Large}{13}{subsection.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces LLM density around human rationales vs.\ reconstruction error (sliding window). Green (left axis): mean distance to 50 nearest LLM neighbors---increases monotonically ($r = 0.969$). Orange (right axis): mean LLM neighbors within fixed radius---decreases ($r = -0.527$). Human rationales that occupy the extra dimensions are in LLM-sparse regions of embedding space.}}{13}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:freq_geom_binned}{{10}{13}{LLM density around human rationales vs.\ reconstruction error (sliding window). Green (left axis): mean distance to 50 nearest LLM neighbors---increases monotonically ($r = 0.969$). Orange (right axis): mean LLM neighbors within fixed radius---decreases ($r = -0.527$). Human rationales that occupy the extra dimensions are in LLM-sparse regions of embedding space}{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Per-rationale density ratio (LLM distance / human distance) vs.\ reconstruction error. Each point is one of 10,826 human rationales. The trend line shows $r = 0.543$; at the bin level, $r = 0.988$.}}{14}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:freq_geom_scatter}{{11}{14}{Per-rationale density ratio (LLM distance / human distance) vs.\ reconstruction error. Each point is one of 10,826 human rationales. The trend line shows $r = 0.543$; at the bin level, $r = 0.988$}{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Layer 5: The Compression Is Structural}{14}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Method.}{14}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Consensus-Independent Dimensionality Gap}{15}{subsection.7.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Dimensionality gap by consensus level (bootstrap at matched $n = 220$, 5 seeds).}}{15}{table.caption.26}\protected@file@percent }
+\newlabel{tab:consensus}{{5}{15}{Dimensionality gap by consensus level (bootstrap at matched $n = 220$, 5 seeds)}{table.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Three-panel consensus robustness at matched $n = 220$. Left: PCA gap persists across consensus levels. Center: human--LLM centroid distance is stable. Right: human within-group spread exceeds LLM spread at all levels.}}{15}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:consensus_gap}{{12}{15}{Three-panel consensus robustness at matched $n = 220$. Left: PCA gap persists across consensus levels. Center: human--LLM centroid distance is stable. Right: human within-group spread exceeds LLM spread at all levels}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Robustness}{15}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Value diversity by consensus.}{15}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}LLM Inter-Model Convergence}{15}{subsection.7.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces LLM inter-model cosine distance vs.\ consensus level. A diverse panel should show higher distance (more disagreement) on controversial dilemmas; LLMs do not.}}{16}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:convergence}{{13}{16}{LLM inter-model cosine distance vs.\ consensus level. A diverse panel should show higher distance (more disagreement) on controversial dilemmas; LLMs do not}{figure.caption.29}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Layer 6: Categorical Analysis Is the Wrong Tool}{16}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Method.}{16}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Value Label Clustering}{16}{subsection.8.1}\protected@file@percent }
+\newlabel{fig:eff_clusters_k}{{14a}{17}{Effective clusters used per source vs.\ $k$}{figure.caption.31}{}}
+\newlabel{sub@fig:eff_clusters_k}{{a}{17}{Effective clusters used per source vs.\ $k$}{figure.caption.31}{}}
+\newlabel{fig:sil_k}{{14b}{17}{Silhouette score vs.\ $k$}{figure.caption.31}{}}
+\newlabel{sub@fig:sil_k}{{b}{17}{Silhouette score vs.\ $k$}{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Value label clustering across $k$. (a) Both human and all-LLM track together, using 52--60 effective clusters at $k = 60$. (b) Silhouette scores range from 0.11 to 0.19---poor cluster quality throughout.}}{17}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:value_clusters}{{14}{17}{Value label clustering across $k$. (a) Both human and all-LLM track together, using 52--60 effective clusters at $k = 60$. (b) Silhouette scores range from 0.11 to 0.19---poor cluster quality throughout}{figure.caption.31}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Rationale Embedding Clustering}{17}{subsection.8.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Silhouette score vs.\ $k$ for rationale embedding clustering. All values are well below Russo et al.'s 0.09 benchmark, indicating negligible cluster structure.}}{17}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:rationale_sil}{{15}{17}{Silhouette score vs.\ $k$ for rationale embedding clustering. All values are well below Russo et al.'s 0.09 benchmark, indicating negligible cluster structure}{figure.caption.32}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Gap statistic for rationale embedding clustering. Monotonic increase indicates no natural cluster count.}}{18}{table.caption.33}\protected@file@percent }
+\newlabel{tab:gap}{{6}{18}{Gap statistic for rationale embedding clustering. Monotonic increase indicates no natural cluster count}{table.caption.33}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Joint Clustering Artifacts}{18}{subsection.8.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Joint vs.\ per-source clustering at $k = 60$. Joint clustering artificially concentrates human rationales.}}{18}{table.caption.34}\protected@file@percent }
+\newlabel{tab:joint_artifact}{{7}{18}{Joint vs.\ per-source clustering at $k = 60$. Joint clustering artificially concentrates human rationales}{table.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Cluster entropy: joint (left) vs.\ per-source (right) clustering. Joint clustering artificially depresses human entropy; per-source clustering shows human and LLM entropy are nearly identical.}}{18}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:joint_vs_persource}{{16}{18}{Cluster entropy: joint (left) vs.\ per-source (right) clustering. Joint clustering artificially depresses human entropy; per-source clustering shows human and LLM entropy are nearly identical}{figure.caption.35}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Why PCA Captures What Clustering Misses}{19}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Discussion}{19}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}The Logical Structure}{19}{subsection.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Limitations}{19}{subsection.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Implications}{20}{subsection.9.3}\protected@file@percent }
+\gdef \@abspage@last{20}

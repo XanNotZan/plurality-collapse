@@ -1,9 +1,11 @@
 """Robustness checks for moral reasoning embedding analysis."""
 
 import csv
+import json
 import logging
 import os
 import time
+from collections import defaultdict
 
 import matplotlib
 matplotlib.use("Agg")
@@ -381,6 +383,153 @@ def check_subsampling_robustness(logger: logging.Logger) -> None:
     logger.info("Saved %s", plot_path)
 
 
+# ── Check 3: Dilemma-Matched Subsampling ──────────────────────────────────────
+def check_dilemma_matched_subsampling(logger: logging.Logger) -> None:
+    """Check 3: Subsample to 1 rationale per dilemma, matching human data structure."""
+    embeddings = load_embeddings(logger)
+    LLM_SOURCE_LIST = [s for s in ALL_SOURCES if s != "human"]
+
+    if "human" not in embeddings:
+        raise SystemExit("Human embeddings not found.")
+    human_n = embeddings["human"].shape[0]
+
+    # Build dilemma groups: source -> {submission_id: [row_indices]}
+    dilemma_groups: dict[str, dict[str, list[int]]] = {}
+    for source in LLM_SOURCE_LIST:
+        meta_path = os.path.join(EMBEDDINGS_DIR, f"{source}_meta.json")
+        if not os.path.exists(meta_path):
+            continue
+        with open(meta_path, encoding="utf-8") as f:
+            meta = json.load(f)
+        groups: dict[str, list[int]] = defaultdict(list)
+        for entry in meta:
+            groups[entry["submission_id"]].append(entry["index"])
+        dilemma_groups[source] = dict(groups)
+        logger.info("%s: %d dilemmas, %d total rationales",
+                    source, len(groups), len(meta))
+
+    # Get ordered dilemma list from human metadata
+    with open(os.path.join(EMBEDDINGS_DIR, "human_meta.json"), encoding="utf-8") as f:
+        human_meta = json.load(f)
+    dilemma_order = [m["submission_id"] for m in human_meta]
+
+    results = []
+
+    # Human: no subsampling needed
+    human_metrics = compute_pca_metrics(embeddings["human"])
+    results.append({
+        "method": "dilemma_matched",
+        "source": "human",
+        "n_samples": human_n,
+        "pr_mean": human_metrics["pr"],
+        "pr_std": 0.0,
+        "comp90_mean": float(human_metrics["comp90"]),
+        "comp90_std": 0.0,
+        "comp95_mean": float(human_metrics["comp95"]),
+        "comp95_std": 0.0,
+    })
+
+    # Per-model: 1 rationale per dilemma per LLM
+    for source in LLM_SOURCE_LIST:
+        if source not in embeddings or source not in dilemma_groups:
+            continue
+        matrix = embeddings[source]
+        groups = dilemma_groups[source]
+
+        pr_vals, comp90_vals, comp95_vals = [], [], []
+        for seed in SUBSAMPLE_SEEDS:
+            rng = np.random.RandomState(seed)
+            indices = []
+            for sid in dilemma_order:
+                if sid in groups:
+                    idx_list = groups[sid]
+                    indices.append(rng.choice(idx_list))
+            sub_matrix = matrix[np.array(indices)]
+            metrics = compute_pca_metrics(sub_matrix)
+            pr_vals.append(metrics["pr"])
+            comp90_vals.append(metrics["comp90"])
+            comp95_vals.append(metrics["comp95"])
+
+        results.append({
+            "method": "dilemma_matched",
+            "source": source,
+            "n_samples": len(indices),
+            "pr_mean": float(np.mean(pr_vals)),
+            "pr_std": float(np.std(pr_vals)),
+            "comp90_mean": float(np.mean(comp90_vals)),
+            "comp90_std": float(np.std(comp90_vals)),
+            "comp95_mean": float(np.mean(comp95_vals)),
+            "comp95_std": float(np.std(comp95_vals)),
+        })
+        logger.info("%s (dilemma_matched): n=%d, PR=%.2f±%.2f, comp90=%.1f±%.1f",
+                    source, len(indices),
+                    np.mean(pr_vals), np.std(pr_vals),
+                    np.mean(comp90_vals), np.std(comp90_vals))
+
+    # Cross-model: 1 rationale per dilemma from any LLM
+    # Build combined pool per dilemma: (source, row_index) pairs
+    all_llm_pool: dict[str, list[tuple[str, int]]] = defaultdict(list)
+    for source in LLM_SOURCE_LIST:
+        if source not in dilemma_groups:
+            continue
+        for sid, idx_list in dilemma_groups[source].items():
+            for idx in idx_list:
+                all_llm_pool[sid].append((source, idx))
+
+    pr_vals, comp90_vals, comp95_vals = [], [], []
+    for seed in SUBSAMPLE_SEEDS:
+        rng = np.random.RandomState(seed)
+        rows = []
+        for sid in dilemma_order:
+            if sid not in all_llm_pool:
+                continue
+            pool = all_llm_pool[sid]
+            chosen_source, chosen_idx = pool[rng.randint(len(pool))]
+            rows.append(embeddings[chosen_source][chosen_idx])
+        sub_matrix = np.array(rows)
+        metrics = compute_pca_metrics(sub_matrix)
+        pr_vals.append(metrics["pr"])
+        comp90_vals.append(metrics["comp90"])
+        comp95_vals.append(metrics["comp95"])
+
+    results.append({
+        "method": "cross_model",
+        "source": "all_llm",
+        "n_samples": len(rows),
+        "pr_mean": float(np.mean(pr_vals)),
+        "pr_std": float(np.std(pr_vals)),
+        "comp90_mean": float(np.mean(comp90_vals)),
+        "comp90_std": float(np.std(comp90_vals)),
+        "comp95_mean": float(np.mean(comp95_vals)),
+        "comp95_std": float(np.std(comp95_vals)),
+    })
+    logger.info("all_llm (cross_model): n=%d, PR=%.2f±%.2f, comp90=%.1f±%.1f",
+                len(rows),
+                np.mean(pr_vals), np.std(pr_vals),
+                np.mean(comp90_vals), np.std(comp90_vals))
+
+    # Save CSV
+    csv_path = os.path.join(OUTPUT_DIR, "dilemma_matched_subsample_table.csv")
+    fieldnames = ["method", "source", "n_samples", "pr_mean", "pr_std",
+                  "comp90_mean", "comp90_std", "comp95_mean", "comp95_std"]
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for r in results:
+            writer.writerow({
+                "method": r["method"],
+                "source": r["source"],
+                "n_samples": r["n_samples"],
+                "pr_mean": f"{r['pr_mean']:.2f}",
+                "pr_std": f"{r['pr_std']:.2f}",
+                "comp90_mean": f"{r['comp90_mean']:.1f}",
+                "comp90_std": f"{r['comp90_std']:.1f}",
+                "comp95_mean": f"{r['comp95_mean']:.1f}",
+                "comp95_std": f"{r['comp95_std']:.1f}",
+            })
+    logger.info("Saved %s", csv_path)
+
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 def main() -> None:
     logger = setup_logging()
@@ -393,6 +542,9 @@ def main() -> None:
 
     logger.info("=== Check 2: Subsampling robustness ===")
     check_subsampling_robustness(logger)
+
+    logger.info("=== Check 3: Dilemma-matched subsampling ===")
+    check_dilemma_matched_subsampling(logger)
 
     elapsed = time.time() - start_time
     logger.info("Done in %.1f seconds.", elapsed)

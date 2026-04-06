@@ -1,6 +1,9 @@
 # Project output data
 data/
 
+# Claude Code
+CLAUDE.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
