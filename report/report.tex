@@ -298,7 +298,7 @@ Three findings converge on the same conclusion. The dimensionality gap (Layer 1:
 
 If plurality collapse were context-dependent---worse on some types of dilemmas than others---it would suggest that the compression varies with the difficulty or nature of the moral question. We test this by stratifying dilemmas by moral consensus level.
 
-\paragraph{Method.} We bucket dilemmas by maximum weighted community agreement across the four verdict categories: low ($< 0.5$), medium ($0.5$--$0.8$), and high ($> 0.8$). Within each bucket, we subsample both human and all-LLM sources to matched $n = 220$ (the size of the smallest bucket) with 5 random seeds and recompute PCA dimensionality. We also compute per-dilemma LLM convergence as the average pairwise cosine distance among all LLM embeddings for each dilemma, and correlate with community agreement.
+\paragraph{Method.} The original dataset provides weighted community agreement scores for each of the four AITA verdict categories (NTA, YTA, ESH, NAH), computed as the proportion of community votes each verdict received, weighted by comment upvotes. We take the maximum agreement across the four categories as a single consensus measure for each dilemma, then bucket dilemmas into three strata: low ($< 0.5$), medium ($0.5$--$0.8$), and high ($> 0.8$). Within each bucket, we subsample both human and all-LLM sources to matched $n = 220$ (the size of the smallest bucket) with 5 random seeds and recompute PCA dimensionality. We also compute per-dilemma LLM convergence as the average pairwise cosine distance among all LLM embeddings for each dilemma, and correlate with community agreement.
 
 \subsection{Consensus-Independent Dimensionality Gap}
 
