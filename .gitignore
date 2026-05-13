@@ -3,6 +3,18 @@ data/
 
 # Claude Code
 CLAUDE.md
+.claude/
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+texput.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
