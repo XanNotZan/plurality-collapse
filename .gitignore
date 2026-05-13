@@ -1,6 +1,34 @@
 # Project output data
 data/
 
+# Whitelist figures for milestone2/milestone3 reports + presentation
+!data/
+data/*
+!data/analysis/
+data/analysis/*
+!data/analysis/cross_projection_heatmap.png
+!data/analysis/cumulative_variance.png
+!data/analysis/milestone3_framing_figure.png
+!data/analysis/milestone3_summary.png
+!data/analysis/value_diversity_sliding.png
+!data/analysis/participation_ratio_comparison.png
+!data/analysis/eigenvalue_decay.png
+!data/analysis/llm_reconstruction_by_model.png
+!data/analysis/value_diversity_gradient.png
+!data/analysis/consensus_gap.png
+!data/analysis/consensus_robustness_combined.png
+!data/analysis/milestone3_arctic_within_dilemma.png
+!data/analysis/milestone3_within_dilemma.png
+!data/analysis/milestone3_verdict_gap.png
+!data/analysis/milestone3_mfd_gradient.png
+!data/analysis/milestone3_modernity.png
+!data/analysis/milestone3_register_paraphrase.png
+!data/analysis/subsample_pr_comparison.png
+!data/analysis/length_vs_pr.png
+!data/analysis_sbert/
+data/analysis_sbert/*
+!data/analysis_sbert/cumulative_variance.png
+
 # Claude Code
 CLAUDE.md
 .claude/
